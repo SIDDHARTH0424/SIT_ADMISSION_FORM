@@ -3,15 +3,30 @@ pipeline {
 
     stages {
 
-       stage('Show Files') {
-    steps {
-        bat 'dir'
-    }
-}
+        stage('Show Files') {
+            steps {
+                echo "Listing files in workspace"
+                bat 'dir'
+            }
+        }
 
         stage('Build') {
             steps {
-                echo 'Build Successful'
+                echo "Building the project"
+                bat 'mvn clean compile'
+            }
+        }
+
+        stage('Automated Testing') {
+            steps {
+                echo "Running automated tests"
+                bat 'mvn test'
+            }
+        }
+
+        stage('Test Report') {
+            steps {
+                junit '**/target/surefire-reports/*.xml'
             }
         }
 
