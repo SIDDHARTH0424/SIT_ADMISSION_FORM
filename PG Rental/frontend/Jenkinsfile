@@ -3,11 +3,11 @@ pipeline {
 
     stages {
 
-        stage('Show Files') {
-            steps {
-                sh 'ls'
-            }
-        }
+       stage('Show Files') {
+    steps {
+        bat 'dir'
+    }
+}
 
         stage('Build') {
             steps {
