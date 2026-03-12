@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven3'
+    }
+
     stages {
 
         stage('Show Files') {
@@ -12,14 +16,14 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo "Building the project"
+                echo "Building project"
                 bat 'mvn clean compile'
             }
         }
 
         stage('Automated Testing') {
             steps {
-                echo "Running automated tests"
+                echo "Running tests"
                 bat 'mvn test'
             }
         }
