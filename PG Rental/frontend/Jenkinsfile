@@ -1,36 +1,35 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven3'
-    }
-
     stages {
 
         stage('Show Files') {
             steps {
-                echo "Listing files in workspace"
                 bat 'dir'
             }
         }
 
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
-                echo "Building project"
-                bat 'mvn clean compile'
+                dir('PG Rental/frontend') {
+                    bat 'npm install'
+                }
             }
         }
 
-        stage('Automated Testing') {
+        stage('Build Project') {
             steps {
-                echo "Running tests"
-                bat 'mvn test'
+                dir('PG Rental/frontend') {
+                    bat 'npm run build'
+                }
             }
         }
 
-        stage('Test Report') {
+        stage('Run Tests') {
             steps {
-                junit '**/target/surefire-reports/*.xml'
+                dir('PG Rental/frontend') {
+                    bat 'npm test'
+                }
             }
         }
 
